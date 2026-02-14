@@ -1,317 +1,230 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>For Christabel ❤️</title>
-  <style>
-    /* ---------- Page + gradient background ---------- */
-    :root{
-      --accent:#ff4e8a;
-      --accent-2:#ff9966;
-      --paper:#fff8f6;
-      --text:#222;
-      --glass: rgba(255,255,255,0.12);
-      --card-w: 360px;
-    }
-    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; -webkit-font-smoothing:antialiased;}
-    body{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(120deg,var(--accent),var(--accent-2),#ffd700);
-      background-size:400% 400%;
-      animation:bgmove 12s ease infinite;
-      color:var(--text);
-      overflow:hidden;
-    }
-    @keyframes bgmove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Christabel ❤️</title>
 
-    /* ---------- center card ---------- */
-    .stage{
-      width:100%;
-      max-width:420px;
-      padding:28px;
-      box-sizing:border-box;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:80vh;
-    }
-    .card{
-      width:100%;
-      max-width:var(--card-w);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border-radius:18px;
-      padding:18px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-      position:relative;
-      overflow:visible;
-      color:white;
-      -webkit-backdrop-filter: blur(4px);
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #ff4e8a, #ff9966, #ffd700, #ff6ec7);
+  background-size: 400% 400%;
+  animation: gradient 12s ease infinite;
+  color: white;
+}
 
-    /* ---------- Envelope ---------- */
-    .envelope {
-      width:100%;
-      height:220px;
-      position:relative;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      perspective:800px;
-      margin-bottom:10px;
-    }
-    .env-body{
-      width:220px;
-      height:140px;
-      background:linear-gradient(180deg,#fff6f6,#ffecec);
-      border-radius:6px;
-      position:relative;
-      box-shadow:0 10px 30px rgba(0,0,0,0.25);
-      transform-style:preserve-3d;
-      overflow:hidden;
-    }
-    /* flap sits on top and rotates */
-    .env-flap{
-      width:0;
-      height:0;
-      border-left:110px solid transparent;
-      border-right:110px solid transparent;
-      border-bottom:70px solid #ffefef;
-      position:absolute;
-      left:0; top:-70px;
-      transform-origin:50% 100%;
-      transform:rotateX(0deg);
-      backface-visibility:hidden;
-      box-shadow:0 8px 18px rgba(0,0,0,0.18);
-    }
+@keyframes gradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
 
-    /* letter that will slide up when flap opens */
-    .letter {
-      width:88%;
-      height:72%;
-      background:var(--paper);
-      border-radius:4px;
-      margin:12% auto 0;
-      box-shadow:0 6px 16px rgba(0,0,0,0.18);
-      padding:16px;
-      color:var(--text);
-      transform:translateY(18px) scale(0.98);
-      opacity:0;
-    }
+.slider {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  transition: transform 0.6s ease;
+}
 
-    /* small heading inside the letter */
-    .letter h2{margin:0 0 8px;font-size:1.05rem}
-    .letter p{margin:0;font-size:0.95rem;line-height:1.3;color:#333}
+.slide {
+  min-width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  text-align: center;
+  box-sizing: border-box;
+}
 
-    /* ---------- Slides container (hidden until envelope opens) ---------- */
-    .slides {
-      display:none;
-      padding-top:8px;
-      text-align:center;
-    }
-    .slide {
-      min-height:130px;
-      transition:opacity .45s ease, transform .45s ease;
-      opacity:0;
-      transform:translateY(10px);
-      color:white;
-    }
-    .slide.active {opacity:1; transform:translateY(0);}
-    .controls{margin-top:14px; display:flex; gap:10px; justify-content:center;}
-    .btn{
-      padding:10px 18px;border-radius:28px;border:none;cursor:pointer;
-      background:rgba(255,255,255,0.95); color:var(--accent); font-weight:600;
-      box-shadow:0 6px 20px rgba(0,0,0,0.15);
-    }
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  max-width: 350px;
+}
 
-    /* final affirmation row */
-    .final{
-      font-size:1.1rem;
-      margin-top:12px;
-      padding:12px;
-      border-radius:12px;
-      background:rgba(255,255,255,0.08);
-    }
+.buttons {
+  margin-top: 30px;
+}
 
-    /* ---------- floating hearts ---------- */
-    .heart {
-      position:fixed;
-      bottom:-30px;
-      font-size:18px;
-      pointer-events:none;
-      transform:translateY(0);
-      animation:floatUp 6s linear forwards;
-      opacity:0.95;
-      filter:drop-shadow(0 4px 6px rgba(0,0,0,0.25));
-    }
-    @keyframes floatUp{to{transform:translateY(-120vh); opacity:0}}
+button {
+  padding: 12px 22px;
+  margin: 0 8px;
+  border-radius: 25px;
+  border: none;
+  background: white;
+  color: #ff4e8a;
+  font-size: 1rem;
+  cursor: pointer;
+}
 
-    /* ---------- small responsive tweaks ---------- */
-    @media (max-width:420px){
-      .card{padding:14px;border-radius:14px}
-      .env-body{width:190px;height:120px}
-      .env-flap{border-left:95px solid transparent;border-right:95px solid transparent;border-bottom:60px solid #ffefef; top:-60px}
-      .letter{width:86%}
-    }
+button:hover {
+  transform: scale(1.05);
+}
 
-    /* ---------- envelope open animation (JS toggles classes) ---------- */
-    .env-open .env-flap { animation:openFlap .9s forwards cubic-bezier(.2,.9,.3,1); }
-    .env-open .letter { animation:revealLetter .9s .25s forwards cubic-bezier(.2,.9,.3,1); }
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: float 6s linear infinite;
+}
 
-    @keyframes openFlap {
-      0% { transform: rotateX(0deg); }
-      60% { transform: rotateX(-90deg); }
-      100% { transform: rotateX(-180deg); }
-    }
-    @keyframes revealLetter {
-      0% { transform: translateY(18px) scale(.98); opacity:0 }
-      100% { transform: translateY(-8px) scale(1); opacity:1 }
-    }
-  </style>
+@keyframes float {
+  from {transform: translateY(0); opacity: 1;}
+  to {transform: translateY(-110vh); opacity: 0;}
+}
+</style>
 </head>
+
 <body>
-  <div class="stage">
-    <div class="card" id="card">
-      <!-- Envelope area -->
-      <div class="envelope" id="envelope">
-        <div class="env-body">
-          <div class="env-flap" id="flap"></div>
-          <div class="letter" id="letter">
-            <!-- Letter content uses lines from your chat export (source cited). -->
-            <h2>For Christabel</h2>
-            <p>
-              From the very first night I walked to meet you, something changed.
-              That conversation — and the way you laugh — made ordinary feel special.
-            </p>
-            <p style="margin-top:8px;font-weight:600;color:#b22">
-  &mdash; "I love you my munch" — a line I keep coming back to.
-            </p> 
-            </p>
-          </div>
-        </div>
-      </div>
 
-      <!-- Slides (hidden until envelope opens) -->
-      <div class="slides" id="slides" aria-hidden="true">
-        <div class="slide active" id="s0">
-          <h3 style="margin:0 0 8px;font-size:1.15rem">We never thought we’d end up here, did we?</h3>
-          <p style="margin:0 0 8px;opacity:0.95">
-            A tiny, honest thought that grew into a long conversation and then into a habit — of being together.
-          </p>
-        </div>
+<div class="slider" id="slider">
 
-        <div class="slide" id="s1">
-          <h3 style="margin:0 0 8px;font-size:1.15rem">But here we are, right?</h3>
-          <p style="margin:0">A place made from jokes, late calls, and unexpected kindness.</p>
-        </div>
-
-        <div class="slide" id="s2">
-          <h3 style="margin:0 0 8px;font-size:1.15rem">Are you happy with me?</h3>
-          <p style="margin:0">I ask because I want the answer to be true — not because I need it to be.</p>
-        </div>
-
-        <div class="slide" id="s3">
-          <h3 style="margin:0 0 8px;font-size:1.15rem">Life moves fast...</h3>
-          <p style="margin:0">But this steady, calm pace with you is where I want to be.</p>
-        </div>
-
-        <div class="slide" id="s4">
-          <h3 style="margin:0 0 8px;font-size:1.15rem">I love you my munch ❤️</h3>
-          <p style="margin:0">All the small things add up into a feeling I cannot pretend isn't true.</p>
-        </div>
-
-        <div class="slide" id="s5">
-          <h3 style="margin:0 0 8px;font-size:1.15rem">So — will you be my Valentine?</h3>
-          <div class="controls">
-            <button class="btn" onclick="finalYes()">Yes</button>
-            <button class="btn" onclick="finalYes()">Yes</button>
-          </div>
-        </div>
-
-        <div class="final" id="final" style="display:none;">
-          <strong>You are chosen. Always.</strong>
-        </div>
-
-        <div style="margin-top:12px; text-align:center; font-size:0.85rem; opacity:0.9;">
-          <button class="btn" id="prev" style="display:inline-block;opacity:0.9">Previous</button>
-          <button class="btn" id="next" style="display:inline-block;opacity:0.9;margin-left:8px">Next</button>
-        </div>
-      </div>
+  <div class="slide">
+    <h1>
+      Christabel… we never thought we’d end up here, did we?
+      <br><br>
+      It started with simple conversations. Nothing dramatic. Just two people talking.
+    </h1>
+    <div class="buttons">
+      <button onclick="next()">Next ❤️</button>
     </div>
   </div>
 
-  <script>
-    /* ---------- Behaviour notes (intentional comments inside code) ----------
-       1) Envelope opens on load; letter slides up with a short delay.
-       2) When the letter is revealed, the slides container fades in and becomes interactive.
-       3) Slides use simple fade + translate transitions for elegant pacing.
-       4) Floating hearts run in the background to keep motion alive.
-       ------------------------------------------------------------------- */
+  <div class="slide">
+    <h1>
+      From the very first night I walked to meet you,
+      something changed.
+      <br><br>
+      That conversation shifted everything quietly.
+    </h1>
+    <div class="buttons">
+      <button onclick="prev()">Previous</button>
+      <button onclick="next()">Next ❤️</button>
+    </div>
+  </div>
 
-    const envelope = document.getElementById('envelope');
-    const card = document.getElementById('card');
-    const slidesBox = document.getElementById('slides');
-    const letter = document.getElementById('letter');
+  <div class="slide">
+    <h1>
+      A tiny, honest thought grew into long conversations,
+      late calls,
+      and laughter that stayed with me long after we hung up.
+    </h1>
+    <div class="buttons">
+      <button onclick="prev()">Previous</button>
+      <button onclick="next()">Next ❤️</button>
+    </div>
+  </div>
 
-    // open the envelope after a short pause
-    function openEnvelope() {
-      envelope.classList.add('env-open');
-      // after flap + letter animation complete, reveal slides
-      setTimeout(() => {
-        slidesBox.style.display = 'block';
-        slidesBox.setAttribute('aria-hidden','false');
-        // animate first slide in
-        document.querySelector('.slide.active').classList.add('visible');
-      }, 1100); // coordinated with CSS animation durations
-    }
+  <div class="slide">
+    <h1>
+      I didn’t plan this.
+      I didn’t calculate it.
+      <br><br>
+      But I’m grateful it happened.
+    </h1>
+    <div class="buttons">
+      <button onclick="prev()">Previous</button>
+      <button onclick="next()">Next ❤️</button>
+    </div>
+  </div>
 
-    // slide navigation
-    const slides = Array.from(document.querySelectorAll('.slide'));
-    let idx = 0;
-    function showSlide(i){
-      slides.forEach((s, n) => {
-        s.classList.toggle('active', n===i);
-      });
-    }
-    document.getElementById('next').addEventListener('click', () => {
-      idx = Math.min(slides.length-1, idx+1);
-      showSlide(idx);
-    });
-    document.getElementById('prev').addEventListener('click', () => {
-      idx = Math.max(0, idx-1);
-      showSlide(idx);
-    });
+  <div class="slide">
+    <h1>
+      Are you happy with me?
+      <br><br>
+      Because I’m genuinely happy with you.
+      And that’s not something I say lightly.
+    </h1>
+    <div class="buttons">
+      <button onclick="prev()">Previous</button>
+      <button onclick="next()">Next ❤️</button>
+    </div>
+  </div>
 
-    // final 'Yes' handler
-    function finalYes(){
-      document.getElementById('final').style.display = 'block';
-      // modest celebratory hearts
-      for(let i=0;i<28;i++){ setTimeout(createHeart, i*80); }
-    }
+  <div class="slide">
+    <h1>
+      Life moves fast.
+      Dreams are loud.
+      The world doesn’t slow down.
+      <br><br>
+      But with you, this steady pace feels right.
+    </h1>
+    <div class="buttons">
+      <button onclick="prev()">Previous</button>
+      <button onclick="next()">Next ❤️</button>
+    </div>
+  </div>
 
-    // floating heart generator
-    function createHeart(){
-      const h = document.createElement('div');
-      h.className = 'heart';
-      h.textContent = '❤️';
-      h.style.left = (10 + Math.random()*80) + 'vw';
-      h.style.fontSize = (12 + Math.random()*20) + 'px';
-      h.style.animationDuration = (5 + Math.random()*4) + 's';
-      document.body.appendChild(h);
-      setTimeout(()=> h.remove(), 8500);
-    }
+  <div class="slide">
+    <h1>
+      You make ordinary days feel meaningful.
+      You make effort feel easy.
+      <br><br>
+      I love you, my munch ❤️
+    </h1>
+    <div class="buttons">
+      <button onclick="prev()">Previous</button>
+      <button onclick="next()">Next ❤️</button>
+    </div>
+  </div>
 
-    // small cadence: open envelope once page is loaded (on mobile load delay a touch longer)
-    window.addEventListener('load', () => {
-      setTimeout(openEnvelope, 700);
-      // keep hearts flowing softly in the background
-      setInterval(createHeart, 500);
-    });
+  <div class="slide">
+    <h1>
+      So I’ll ask you properly now…
+      <br><br>
+      Will you be my Valentine?
+    </h1>
+    <div class="buttons">
+      <button onclick="prev()">Previous</button>
+      <button onclick="celebrate()">Yes</button>
+      <button onclick="celebrate()">Yes</button>
+    </div>
+  </div>
 
-    // expose finalYes to global scope (so inline buttons can call it)
-    window.finalYes = finalYes;
-  </script>
+</div>
+
+<script>
+let current = 0;
+const slider = document.getElementById("slider");
+
+function next() {
+  if (current < slider.children.length - 1) {
+    current++;
+    slider.style.transform = "translateX(-" + current * 100 + "%)";
+  }
+}
+
+function prev() {
+  if (current > 0) {
+    current--;
+    slider.style.transform = "translateX(-" + current * 100 + "%)";
+  }
+}
+
+function celebrate() {
+  alert("Correct answer 😌❤️");
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 400);
+</script>
+
 </body>
 </html>
