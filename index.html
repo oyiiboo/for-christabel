@@ -1,1 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Christabel ❤️</title>
 
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg, #ff4e8a, #ff9966, #ffd700, #ff6ec7);
+  background-size: 400% 400%;
+  animation: gradient 12s ease infinite;
+  color: white;
+}
+
+@keyframes gradient {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+.container {
+  max-width: 380px;
+  padding: 30px;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+h1 {
+  font-size: 1.7rem;
+  min-height: 120px;
+  transition: opacity 0.5s ease;
+  line-height: 1.4;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  background: white;
+  color: #ff4e8a;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% {box-shadow: 0 0 0 0 rgba(255,255,255,0.7);}
+  70% {box-shadow: 0 0 0 15px rgba(255,255,255,0);}
+  100% {box-shadow: 0 0 0 0 rgba(255,255,255,0);}
+}
+
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: float 6s linear infinite;
+}
+
+@keyframes float {
+  from {transform: translateY(0); opacity: 1;}
+  to {transform: translateY(-110vh); opacity: 0;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1 id="text">Christabel… we never thought we’d end up here, did we?</h1>
+  <button onclick="nextSlide()">Continue ❤️</button>
+</div>
+
+<script>
+const slides = [
+"Christabel… we never thought we’d end up here, did we?",
+"But somehow, through conversations, laughter, and small unexpected moments… here we are.",
+"I won’t lie — I didn’t plan this. But I’m grateful it happened.",
+"Are you happy with me? I hope you are. Because I am genuinely happy with you.",
+"Life moves fast. Dreams are loud. The world doesn’t slow down for anyone.",
+"But with you… this steady, calm, intentional pace feels right.",
+"You make ordinary days feel meaningful.",
+"You make effort feel easy.",
+"And loving you feels natural.",
+"I love you, my munch ❤️",
+"So here’s the only real question that matters…",
+"Will you be my Valentine?"
+];
+
+let index = 0;
+
+function nextSlide() {
+  index++;
+  const text = document.getElementById("text");
+  text.style.opacity = 0;
+
+  setTimeout(() => {
+    if (index < slides.length) {
+      text.innerHTML = slides[index];
+      text.style.opacity = 1;
+    } else {
+      document.querySelector(".container").innerHTML =
+      "<h1>Christabel ❤️<br>Be My Valentine?</h1>" +
+      "<button onclick='celebrate()'>Yes</button>" +
+      "<button onclick='celebrate()'>Yes</button>";
+    }
+  }, 400);
+}
+
+function celebrate() {
+  document.body.innerHTML =
+  "<h1 style='font-size:2rem; text-align:center;'>You are chosen. Always. ❤️</h1>";
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
